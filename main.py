@@ -48,6 +48,7 @@ if "interview_questions" not in st.session_state:
     st.session_state.interview_questions = random.sample(question_pool, 3)
     st.session_state.answers = []
     st.session_state.question_index = -1
+    st.session_state.feedback_given = False
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -69,23 +70,27 @@ if prompt := st.chat_input("지원 직무를 입력해주세요." if st.session_
     elif st.session_state.question_index < 3:
         st.session_state.answers.append(prompt)
         st.session_state.question_index += 1
+
         if st.session_state.question_index < 3:
             question = st.session_state.interview_questions[st.session_state.question_index]
             with st.chat_message("assistant"):
                 st.markdown(f"{st.session_state.question_index + 1}번 질문입니다:\n\n**{question}**")
             st.session_state.messages.append({"role": "assistant", "content": f"{st.session_state.question_index + 1}번 질문입니다:\n\n**{question}**"})
-        else:
-            job = st.session_state.job
-            feedback_prompt = f"지원 직무는 '{job}'입니다. 다음은 그에 대해 받은 인터뷰 질문과 지원자의 응답입니다.\n\n"
-            for i, (q, a) in enumerate(zip(st.session_state.interview_questions, st.session_state.answers), 1):
-                feedback_prompt += f"{i}번 질문: {q}\n지원자의 답변: {a}\n\n"
-            feedback_prompt += "GPT는 위 답변들을 평가하고 피드백을 제공합니다. 각 질문에 대해 답변이 직무와 관련하여 얼마나 적절했는지를 분석하고, 적절한 경우 어떤 점이 적절했는지, 부족한 경우 어떤 부분을 보완하면 좋을지 제안해주세요. 마지막에 전체 총평을 작성해주세요."
 
-            with st.chat_message("assistant"):
-                stream = client.chat.completions.create(
-                    model=st.session_state["openai_model"],
-                    messages=[{"role": "user", "content": feedback_prompt}],
-                    stream=True,
-                )
-                response = st.write_stream(stream)
-            st.session_state.messages.append({"role": "assistant", "content": response})
+# 답변이 모두 완료되었고, 피드백이 아직 출력되지 않았다면 피드백 출력
+if st.session_state.question_index == 3 and not st.session_state.feedback_given:
+    job = st.session_state.job
+    feedback_prompt = f"지원 직무는 '{job}'입니다. 다음은 그에 대해 받은 인터뷰 질문과 지원자의 응답입니다.\n\n"
+    for i, (q, a) in enumerate(zip(st.session_state.interview_questions, st.session_state.answers), 1):
+        feedback_prompt += f"{i}번 질문: {q}\n지원자의 답변: {a}\n\n"
+    feedback_prompt += "GPT는 위 답변들을 평가하고 피드백을 제공합니다. 각 질문에 대해 답변이 직무와 관련하여 얼마나 적절했는지를 분석하고, 적절한 경우 어떤 점이 적절했는지, 부족한 경우 어떤 부분을 보완하면 좋을지 제안해주세요. 마지막에 전체 총평을 작성해주세요."
+
+    with st.chat_message("assistant"):
+        stream = client.chat.completions.create(
+            model=st.session_state["openai_model"],
+            messages=[{"role": "user", "content": feedback_prompt}],
+            stream=True,
+        )
+        response = st.write_stream(stream)
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.feedback_given = True
