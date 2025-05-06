@@ -80,10 +80,17 @@ if prompt := st.chat_input("지원 직무를 입력해주세요." if st.session_
 # 답변이 모두 완료되었고, 피드백이 아직 출력되지 않았다면 피드백 출력
 if st.session_state.question_index == 3 and not st.session_state.feedback_given:
     job = st.session_state.job
-    feedback_prompt = f"지원 직무는 '{job}'입니다. 다음은 그에 대해 받은 인터뷰 질문과 지원자의 응답입니다.\n\n"
+    feedback_prompt = f"""지원 직무는 '{job}'입니다. 다음은 그에 대해 받은 인터뷰 질문과 지원자의 응답입니다.\n\n"""
+
     for i, (q, a) in enumerate(zip(st.session_state.interview_questions, st.session_state.answers), 1):
         feedback_prompt += f"{i}번 질문: {q}\n지원자의 답변: {a}\n\n"
-    feedback_prompt += "GPT는 위 답변들을 평가하고 피드백을 제공합니다. 각 질문에 대해 답변이 직무와 관련하여 얼마나 적절했는지를 분석하고, 적절한 경우 어떤 점이 적절했는지, 부족한 경우 어떤 부분을 보완하면 좋을지 제안해주세요. 마지막에 전체 총평을 작성해주세요."
+
+    # 새 피드백 요청: 각 질문별 분석 X, 전체 총평만 요청
+    feedback_prompt += (
+        "위 인터뷰 답변들을 바탕으로 전체적으로 평가해 주세요.\n"
+        "답변에서 **지원 직무와 관련해 적절한 점**과 **부족한 점**을 중심으로 분석하고, "
+        "**전체 총평**을 제공해 주세요. 개별 질문 분석은 하지 마세요."
+    )
 
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
@@ -92,5 +99,6 @@ if st.session_state.question_index == 3 and not st.session_state.feedback_given:
             stream=True,
         )
         response = st.write_stream(stream)
+
     st.session_state.messages.append({"role": "assistant", "content": response})
     st.session_state.feedback_given = True
