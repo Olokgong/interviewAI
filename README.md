@@ -28,7 +28,7 @@ GPT API를 활용한 질문 생성 및 답변 피드백 제공
 - **AI**: OpenAI GPT4-o API
 
 
-## 팀원 소개
+## 🧑‍🤝‍🧑 팀원 소개
 |이름|역할|
 |---|---|
 | 유정휘 | 팀원 |
@@ -43,19 +43,20 @@ GPT API를 활용한 질문 생성 및 답변 피드백 제공
 - **개발 도구**: intelJ, Visual Studio Code
 
 
-### 환경 변수 설정
+## ✒️ 환경 변수 설정
 
 Streamlit의 Settings->Secrets  다음을 입력합니다:
 ```
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-### 📝 프로젝트 아키텍쳐
+
+## 📝 프로젝트 아키텍쳐
 
 ![InterviewAI Preview2](https://github.com/Olokgong/interviewAI/blob/main/image02.png)
 
 
-### interviewAI Streamlit 접속
+## 💻 interviewAI Streamlit 접속
 ```
 https://interviewai-abc123.streamlit.app
 ```
