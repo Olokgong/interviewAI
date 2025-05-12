@@ -57,7 +57,7 @@ OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ### interviewAI Streamlit 접속
 ```
-[http://localhost:3000](https://interviewai-abc123.streamlit.app/)
+https://interviewai-abc123.streamlit.app
 ```
 
 
