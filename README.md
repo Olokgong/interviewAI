@@ -50,7 +50,7 @@ Streamlit의 Settings->Secrets  다음을 입력합니다:
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-### 프로젝트 아키텍쳐
+### 📝 프로젝트 아키텍쳐
 
 ![InterviewAI Preview2](https://github.com/Olokgong/interviewAI/blob/main/image02.png)
 
