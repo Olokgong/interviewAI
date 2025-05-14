@@ -4,7 +4,7 @@
 ## 🎯 프로젝트 개요
 
 **InterviewAI**  
-React 기반의 면접 연습 웹 앱  
+Streamlit 기반의 면접 연습 웹 앱  
 GPT API를 활용한 질문 생성 및 답변 피드백 제공
 
 
