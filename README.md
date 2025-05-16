@@ -43,7 +43,7 @@ GPT API를 활용한 질문 및 답변 피드백 제공
 - **개발 도구**: intelJ, Visual Studio Code
 
 
-## ✒️ 환경 변수 설정
+## ✒️ 환경 설정
 
 Streamlit의 Settings->Secrets  다음을 입력합니다:
 ```
