@@ -21,6 +21,12 @@ GPT API를 활용한 질문 및 답변 피드백 제공
 ![InterviewAI Preview](https://github.com/Olokgong/interviewAI/blob/main/image01.png)
 
 
+## 📺 시연 영상
+```
+https://youtu.be/bEbhdrZGKM8
+```
+
+
 ## 🛠 기술 스택
 
 - **language**: Python
